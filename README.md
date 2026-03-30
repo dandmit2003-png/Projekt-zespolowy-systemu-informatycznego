@@ -1,1 +1,1 @@
-#Projekt zespołowy systemu informatycznego
+Projekt zespołowy systemu informatycznego
