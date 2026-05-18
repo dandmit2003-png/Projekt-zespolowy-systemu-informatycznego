@@ -1,11 +1,11 @@
 ## Strona wypożyczenia computerów i laptopów "CompRent"
 
-##Opis projektu
+## Opis projektu
 - Сo robi: Strona internetowa zaprojektowana w celu umożliwienia firmom oraz osobom prywatnym wynajmu komputerów dostosowanych do ich potrzeb, wyposażona w funkcje filtrowania ofert, zarządzania zamówieniami oraz obsługi zwrotów.
 - Dla kogo jest: Srtona jest skierowana dla wszysktich chętnych
 - Jaki problem rozwiązuje: Aplikacja rozwiązuje problem klienta, który potrzebuje szybko i bez zbędnych formalności wypożyczyć laptop na krótki okres, umożliwiając mu samodzielne przeglądanie, filtrowanie, wypożyczenie oraz zwrot sprzętu online z poziomu własnego profilu.
 
-##Sprint plan
+## Sprint plan
 Sprint 1 | 10.03 | konfiguracja, baza danych, UI
 Sprint 2 | 24.03 | lista laptopów, filtr, logowanie
 Sprint 3 | 14.04 | wypożyczenie, profil, zamówienia
@@ -43,27 +43,29 @@ Baza danych:
 
 ## Instalacja
 1. Sklonuj repozytorium
-git clone https://github.com/nazwa/projekt.git
-2. Przejdź do katalogu projektu
-cd projekt
+git clone https://github.com/dandmit2003-png/Projekt-zespolowy-systemu-informatycznego
+2. Pobierz plik
+Project gotowy
+3. Wejdż na strone https://app.netlify.com/drop i wklej plik "Projekt gotowy"
+
 
 ## Instrukcja użytkownika
-1. Otwórz przeglądarkę
-2. Przejdź na adres:
-http://localhost:3000
+1. Wejdż na strone https://app.netlify.com/drop i wklej plik "Projekt gotowy"
 3. Utwórz konto
 4. Zaloguj się
-5. Wybierz pokój i dokonaj rezerwacji
+5. Wybierz laptop i dokonaj rezerwacji
 
 ## Struktura projektu
-frontend/ – interfejs użytkownika
-backend/ – logika aplikacji
-docs/ – dokumentacja
-tests/ – testy 
+- Baza danych.drawio
+- Figma 2 variant
+- HTML(BETA)
+- Projekt gotowy.html
+- README.md
+- alfa wersja.jpg
 
 ## Zrzuty ekranu
-![login](docs/login.png)
-![dashboard](docs/dashboard.png)
+![Klient](docs/login.png)
+![Administrator](docs/dashboard.png)
 
 ## Status projektu
 Projekt ukończony w ramach kursu Projekt Zespołowy Systemu Informatycznych 2026.
