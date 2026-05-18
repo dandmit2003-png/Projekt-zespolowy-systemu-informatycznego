@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CompRent | Wypożyczalnia laptopów</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: #f4f6fa;
+            color: #1a2c3e;
+            line-height: 1.4;
+        }
+
+        .navbar {
+            background: white;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-bottom: 1px solid #e9edf2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            position: relative;
+        }
+
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .ball1 { width: 18px; height: 18px; background: #ff6b9d; top: 0; left: 50%; transform: translateX(-50%); }
+        .ball2 { width: 16px; height: 16px; background: #ffb347; bottom: 2px; left: 2px; }
+        .ball3 { width: 16px; height: 16px; background: #6c5ce7; bottom: 2px; right: 2px; }
+        .ball4 { width: 14px; height: 14px; background: #00cec9; top: 10px; left: 2px; }
+        .ball5 { width: 14px; height: 14px; background: #fd79a8; top: 10px; right: 2px; }
+        .center-dot { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f6392;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a627a;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover { color: #1f6392; }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #f0f4fa;
+            padding: 6px 20px;
+            border-radius: 40px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #c2412c;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 28px 32px;
+        }
+
+        .search-wrapper {
+            margin-bottom: 32px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            border: 1px solid #dce3ec;
+            background: white;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #1f6392;
+            box-shadow: 0 0 0 3px rgba(31,99,146,0.1);
+        }
+
+        .shop-layout {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .filter-panel {
+            width: 280px;
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            border: 1px solid #eef2f8;
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .filter-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .clear-filters {
+            background: none;
+            border: none;
+            color: #1f6392;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #f0f4f9;
+            padding-bottom: 20px;
+        }
+
+        .filter-section label {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid #dce3ec;
+            background: white;
+            font-size: 14px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: normal;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .price-range {
+            display: flex;
+            gap: 12px;
+        }
+
+        .price-range input {
+            width: 50%;
+            padding: 10px;
+            border-radius: 40px;
+            border: 1px solid #dce3ec;
+        }
+
+        .products-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #eef2f8;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            background: #f0f4fa;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .product-specs {
+            font-size: 13px;
+            color: #5b6e8c;
+            margin: 8px 0;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f6392;
+            margin-top: 12px;
+        }
+
+        .no-results {
+            flex: 1;
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 28px;
+            color: #6c7f96;
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            color: #6c7f96;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb span {
+            cursor: pointer;
+        }
+
+        .breadcrumb span:hover {
+            color: #1f6392;
+            text-decoration: underline;
+        }
+
+        .product-detail-card {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .product-detail-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .product-detail-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .detail-price {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1f6392;
+        }
+
+        .rent-button {
+            background: #1f6392;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .rent-button:hover {
+            background: #0f4a6e;
+        }
+
+        .specs-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            background: #f8fafd;
+            padding: 20px;
+            border-radius: 24px;
+            margin: 24px 0;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 28px;
+            border-bottom: 1px solid #eef2f8;
+            margin-bottom: 28px;
+        }
+
+        .profile-tab {
+            background: none;
+            border: none;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c7f96;
+            cursor: pointer;
+        }
+
+        .profile-tab.active {
+            color: #1f6392;
+            border-bottom: 2px solid #1f6392;
+        }
+
+        .form-double {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-field label {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .input-field input {
+            padding: 12px 16px;
+            border-radius: 24px;
+            border: 1px solid #dce3ec;
+            font-size: 14px;
+        }
+
+        .save-button {
+            background: #1f6392;
+            padding: 10px 28px;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .order-item {
+            background: #f8fafd;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border: 1px solid #eef2f8;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .status-active {
+            background: #e6f7e6;
+            color: #2e7d32;
+        }
+
+        .status-returned {
+            background: #ffe6e5;
+            color: #c2412c;
+        }
+
+        .return-btn {
+            background: #c2412c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eef2f8;
+        }
+
+        .admin-buttons button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .edit-product-btn {
+            background: #eef2ff;
+            color: #1f6392;
+        }
+        .edit-product-btn:hover {
+            background: #1f6392;
+            color: white;
+        }
+        .delete-product-btn {
+            background: #fee2e2;
+            color: #c2412c;
+        }
+        .delete-product-btn:hover {
+            background: #c2412c;
+            color: white;
+        }
+
+        .add-product-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 2px dashed #1f6392;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            padding: 10px 14px;
+            border: 1px solid #dce3ec;
+            border-radius: 40px;
+            font-size: 14px;
+        }
+
+        .btn-add {
+            background: #1f6392;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 60px;
+            width: fit-content;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 40px;
+            color: #6c7f96;
+        }
+
+        .tab.active {
+            background: #1f6392;
+            color: white;
+        }
+
+        .logs-list {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+        }
+
+        .log-item {
+            border-bottom: 1px solid #eef2f8;
+            padding: 12px 0;
+            font-size: 13px;
+        }
+
+        .log-date {
+            color: #8ba0bc;
+            font-size: 11px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1f6392;
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eef2f5;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .auth-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #1a2c3e;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 30px;
+            border: 1px solid #dce3ec;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .auth-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .auth-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            font-size: 13px;
+            color: #4a627a;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #1f6392;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .auth-back {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #6c7f96;
+            margin-top: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .error-msg {
+            color: #c2412c;
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .admin-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .admin-link a {
+            color: #1f6392;
+            text-decoration: none;
+        }
+
+        @media (max-width: 800px) {
+            .filter-panel { width: 100%; position: static; }
+            .container { padding: 20px; }
+            .auth-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+    const LAPTOPS = [
+        { id:1, name:"Acer Nitro V 16 AI", subtitle:"16″ IPS 180Hz · R5-240 · 16GB · 1TB SSD", specs:{ procesor:"AMD Ryzen 5 240", ram:"16GB", dysk:"1TB SSD", karta:"RTX 4050", ekran:"16″ IPS 180Hz", system:"Windows 11" }, price:374, rating:4.5, brand:"Acer", ram:"16GB", storage:"1TB", gpu:"RTX 4050", screen:"16″", image:"https://picsum.photos/id/0/300/180", description:"Acer Nitro V 16 AI – idealny dla graczy i twórców." },
+        { id:2, name:"Apple MacBook Neo 2026", subtitle:"13″ Retina · A18 Pro · 8GB · 512GB", specs:{ procesor:"Apple A18 Pro", ram:"8GB", dysk:"512GB SSD", karta:"Apple GPU", ekran:"13″ Retina", system:"macOS" }, price:291, rating:4.8, brand:"Apple", ram:"8GB", storage:"512GB", gpu:"Integrated", screen:"13″", image:"https://picsum.photos/id/1/300/180", description:"MacBook Neo z A18 Pro – wydajność i styl." },
+        { id:3, name:"Lenovo IdeaPad Slim 5", subtitle:"16″ IPS · R7-7735HS · 32GB · 512GB", specs:{ procesor:"AMD Ryzen 7 7735HS", ram:"32GB", dysk:"512GB SSD", karta:"AMD Radeon 680M", ekran:"16″ IPS", system:"Windows 11" }, price:291, rating:4.2, brand:"Lenovo", ram:"32GB", storage:"512GB", gpu:"AMD Radeon", screen:"16″", image:"https://picsum.photos/id/20/300/180", description:"Świetny do wielozadaniowości." },
+        { id:4, name:"Apple MacBook Air 2026", subtitle:"15.3″ Retina · M5 · 16GB · 512GB", specs:{ procesor:"Apple M5", ram:"16GB", dysk:"512GB SSD", karta:"Apple M5", ekran:"15.3″ Liquid Retina", system:"macOS" }, price:541, rating:4.9, brand:"Apple", ram:"16GB", storage:"512GB", gpu:"Integrated", screen:"15.3″", image:"https://picsum.photos/id/26/300/180", description:"Najlepszy Air w historii." },
+        { id:5, name:"Asus Vivobook 15", subtitle:"15.6″ IPS · Core 5 120U · 16GB · 512GB", specs:{ procesor:"Intel Core 5 120U", ram:"16GB", dysk:"512GB SSD", karta:"Intel Graphics", ekran:"15.6″ IPS", system:"Windows 11" }, price:208, rating:4.0, brand:"Asus", ram:"16GB", storage:"512GB", gpu:"Intel", screen:"15.6″", image:"https://picsum.photos/id/42/300/180", description:"Ekonomiczny laptop do codziennych zadań." },
+        { id:6, name:"Dell XPS 15", subtitle:"15.6″ OLED · i7 · 32GB · 1TB · RTX4060", specs:{ procesor:"Intel i7", ram:"32GB", dysk:"1TB SSD", karta:"RTX 4060", ekran:"15.6″ OLED", system:"Windows 11" }, price:489, rating:4.7, brand:"Dell", ram:"32GB", storage:"1TB", gpu:"RTX 4060", screen:"15.6″", image:"https://picsum.photos/id/96/300/180", description:"Premium, ekran OLED." },
+        { id:7, name:"HP Spectre x360", subtitle:"14″ OLED · i7 · 16GB · 1TB", specs:{ procesor:"Intel i7", ram:"16GB", dysk:"1TB SSD", karta:"Intel Iris", ekran:"14″ OLED", system:"Windows 11" }, price:399, rating:4.4, brand:"HP", ram:"16GB", storage:"1TB", gpu:"Intel Iris", screen:"14″", image:"https://picsum.photos/id/106/300/180", description:"Konwertowalny 2w1." }
+    ];
+
+    let products = [...LAPTOPS];
+    let orders = [];
+    let logs = [];
+    let users = [];
+    let currentUser = null;
+    let currentView = 'shop';
+    let selectedProduct = null;
+    let currentTab = 'shop';
+    let authView = 'welcome';
+    let isAdminMode = false;
+    let filters = { brand: '', ram: [], minPrice: '', maxPrice: '', search: '' };
+
+    function isValidEmail(email) { return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email); }
+    function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+    function saveData() {
+        localStorage.setItem('comprent_users', JSON.stringify(users));
+        localStorage.setItem('comprent_currentUser', JSON.stringify(currentUser));
+        localStorage.setItem('comprent_products', JSON.stringify(products));
+        localStorage.setItem('comprent_orders', JSON.stringify(orders));
+        localStorage.setItem('comprent_logs', JSON.stringify(logs));
+    }
+
+    function loadData() {
+        const savedUsers = localStorage.getItem('comprent_users');
+        const savedCurrent = localStorage.getItem('comprent_currentUser');
+        const savedProducts = localStorage.getItem('comprent_products');
+        const savedOrders = localStorage.getItem('comprent_orders');
+        const savedLogs = localStorage.getItem('comprent_logs');
+        
+        if (savedUsers) users = JSON.parse(savedUsers);
+        if (savedCurrent) currentUser = JSON.parse(savedCurrent);
+        if (savedProducts) products = JSON.parse(savedProducts);
+        if (savedOrders) orders = JSON.parse(savedOrders);
+        if (savedLogs) logs = JSON.parse(savedLogs);
+    }
+
+    function addLog(action, details) {
+        logs.unshift({ id: Date.now(), date: new Date().toLocaleString('pl-PL'), action: action, details: details });
+        if (logs.length > 100) logs.pop();
+        saveData();
+    }
+
+    function getOrders(userId) { return orders.filter(o => o.userId === userId); }
+    function saveOrder(order) { orders.push(order); saveData(); addLog('NOWE WYPOŻYCZENIE', `${order.productName} - ${order.price} zł`); }
+    function returnOrder(orderId) { const idx = orders.findIndex(o => o.id === orderId && o.status === 'active'); if (idx !== -1) { orders[idx].status = 'returned'; orders[idx].returnDate = new Date().toISOString().slice(0, 10); saveData(); addLog('ZWROT', `${orders[idx].productName}`); return true; } return false; }
+
+    function hasAnyAdmin() { return users.some(u => u.role === 'admin'); }
+
+    function init() {
+        loadData();
+        if (users.length === 0) {
+            users = [];
+            saveData();
+        }
+        if (orders.length === 0) orders = [];
+        if (products.length === 0) products = [...LAPTOPS];
+        saveData();
+    }
+
+    function render() {
+        const root = document.getElementById('app');
+        
+        if (!currentUser) {
+            renderAuth(root);
+            return;
+        }
+        
+        if (currentUser.role === 'admin' && isAdminMode) {
+            renderAdminPanel(root);
+        } else {
+            if (currentView === 'profile') renderProfile(root, currentUser);
+            else if (currentView === 'product' && selectedProduct) renderProductDetail(root, currentUser, selectedProduct);
+            else renderShop(root, currentUser);
+        }
+    }
+
+    function renderAuth(root) {
+        const adminExists = hasAnyAdmin();
+        
+        if (authView === 'welcome') {
+            root.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-logo">
+                            <div style="position:absolute; width:32px; height:32px; background:#ff6b9d; border-radius:50%; top:0; left:50%; transform:translateX(-50%);"></div>
+                            <div style="position:absolute; width:28px; height:28px; background:#ffb347; border-radius:50%; bottom:5px; left:5px;"></div>
+                            <div style="position:absolute; width:28px; height:28px; background:#6c5ce7; border-radius:50%; bottom:5px; right:5px;"></div>
+                            <div style="position:absolute; width:24px; height:24px; background:#00cec9; border-radius:50%; top:15px; left:5px;"></div>
+                            <div style="position:absolute; width:24px; height:24px; background:#fd79a8; border-radius:50%; top:15px; right:5px;"></div>
+                            <div style="position:absolute; width:36px; height:36px; background:white; border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%);"></div>
+                        </div>
+                        <div class="auth-title">CompRent</div>
+                        <div style="display:flex; gap:16px;">
+                            <button id="clientLoginBtn" class="auth-btn">Logowanie klienta</button>
+                            <button id="clientRegisterBtn" class="auth-btn" style="background:transparent; border:1.5px solid #1f6392; color:#1f6392;">Rejestracja klienta</button>
+                        </div>
+                        <div class="admin-link">
+                            ${!adminExists ? 
+                                '<a href="#" id="adminRegisterBtn">👑 Zarejestruj administratora →</a>' : 
+                                '<a href="#" id="adminLoginBtn">🔐 Panel administracyjny →</a>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('clientLoginBtn')?.addEventListener('click', () => { authView = 'clientLogin'; render(); });
+            document.getElementById('clientRegisterBtn')?.addEventListener('click', () => { authView = 'clientRegister'; render(); });
+            if (!adminExists) {
+                document.getElementById('adminRegisterBtn')?.addEventListener('click', (e) => { e.preventDefault(); authView = 'adminRegister'; render(); });
+            } else {
+                document.getElementById('adminLoginBtn')?.addEventListener('click', (e) => { e.preventDefault(); authView = 'adminLogin'; render(); });
+            }
+        }
+        else if (authView === 'clientLogin') {
+            root.innerHTML = `<div class="auth-container"><div class="auth-card"><div class="auth-title">Logowanie klienta</div><input type="email" id="loginEmail" class="auth-input" placeholder="Email"><input type="password" id="loginPassword" class="auth-input" placeholder="Hasło"><button id="doLogin" class="auth-btn">Zaloguj się</button><button id="backToWelcome" class="auth-back">← Powrót</button><div id="loginError" class="error-msg"></div></div></div>`;
+            document.getElementById('doLogin')?.addEventListener('click', () => {
+                const email = document.getElementById('loginEmail').value.trim();
+                const pwd = document.getElementById('loginPassword').value;
+                if (!isValidEmail(email)) { document.getElementById('loginError').innerText = "❌ Niepoprawny email (nazwa@domena.pl)"; return; }
+                const user = users.find(u => u.email === email && u.password === pwd && u.role !== 'admin');
+                if (user) {
+                    currentUser = user;
+                    isAdminMode = false;
+                    currentView = 'shop';
+                    saveData();
+                    render();
+                } else { document.getElementById('loginError').innerText = "❌ Błędny email lub hasło"; }
+            });
+            document.getElementById('backToWelcome')?.addEventListener('click', () => { authView = 'welcome'; render(); });
+        }
+        else if (authView === 'clientRegister') {
+            root.innerHTML = `<div class="auth-container"><div class="auth-card"><div class="auth-title">Rejestracja klienta</div><div class="auth-row"><input type="text" id="regName" class="auth-input" placeholder="Imię"><input type="text" id="regSurname" class="auth-input" placeholder="Nazwisko"></div><input type="email" id="regEmail" class="auth-input" placeholder="Email"><input type="password" id="regPassword" class="auth-input" placeholder="Hasło (min.6)"><input type="password" id="regConfirm" class="auth-input" placeholder="Potwierdź hasło"><div class="auth-checkbox"><input type="checkbox" id="policyCheck"> <label>Akceptuję Regulamin</label></div><button id="doSignup" class="auth-btn">Zarejestruj się</button><button id="backToWelcome" class="auth-back">← Powrót</button><div id="signupError" class="error-msg"></div></div></div>`;
+            document.getElementById('doSignup')?.addEventListener('click', () => {
+                const name = document.getElementById('regName').value.trim();
+                const surname = document.getElementById('regSurname').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const pwd = document.getElementById('regPassword').value;
+                const confirm = document.getElementById('regConfirm').value;
+                const policy = document.getElementById('policyCheck').checked;
+                if (!name || !surname || !email || !pwd || !confirm) { document.getElementById('signupError').innerText = "Wypełnij wszystkie pola"; return; }
+                if (!isValidEmail(email)) { document.getElementById('signupError').innerText = "❌ Niepoprawny email (nazwa@domena.pl)"; return; }
+                if (pwd !== confirm) { document.getElementById('signupError').innerText = "Hasła różnią się"; return; }
+                if (pwd.length < 6) { document.getElementById('signupError').innerText = "Hasło min.6 znaków"; return; }
+                if (!policy) { document.getElementById('signupError').innerText = "Zaakceptuj regulamin"; return; }
+                if (users.find(u => u.email === email)) { document.getElementById('signupError').innerText = "Email już istnieje"; return; }
+                const newUser = { id: Date.now(), email, password: pwd, name, surname, phone: "", address: "", role: "user" };
+                users.push(newUser);
+                saveData();
+                currentUser = newUser;
+                isAdminMode = false;
+                currentView = 'shop';
+                render();
+            });
+            document.getElementById('backToWelcome')?.addEventListener('click', () => { authView = 'welcome'; render(); });
+        }
+        else if (authView === 'adminLogin') {
+            root.innerHTML = `<div class="auth-container"><div class="auth-card"><div class="auth-title">Logowanie administratora</div><input type="email" id="loginEmail" class="auth-input" placeholder="Email"><input type="password" id="loginPassword" class="auth-input" placeholder="Hasło"><button id="doAdminLogin" class="auth-btn">Zaloguj jako admin</button><button id="backToWelcome" class="auth-back">← Powrót</button><div id="loginError" class="error-msg"></div></div></div>`;
+            document.getElementById('doAdminLogin')?.addEventListener('click', () => {
+                const email = document.getElementById('loginEmail').value.trim();
+                const pwd = document.getElementById('loginPassword').value;
+                if (!isValidEmail(email)) { document.getElementById('loginError').innerText = "❌ Niepoprawny email"; return; }
+                const user = users.find(u => u.email === email && u.password === pwd && u.role === 'admin');
+                if (user) {
+                    currentUser = user;
+                    isAdminMode = true;
+                    currentTab = 'shop';
+                    saveData();
+                    render();
+                } else { document.getElementById('loginError').innerText = "❌ Błędny email lub hasło admina"; }
+            });
+            document.getElementById('backToWelcome')?.addEventListener('click', () => { authView = 'welcome'; render(); });
+        }
+        else if (authView === 'adminRegister') {
+            root.innerHTML = `<div class="auth-container"><div class="auth-card"><div class="auth-title">Rejestracja administratora</div><div class="auth-row"><input type="text" id="regName" class="auth-input" placeholder="Imię *"><input type="text" id="regSurname" class="auth-input" placeholder="Nazwisko *"></div><input type="email" id="regEmail" class="auth-input" placeholder="Email *"><div class="auth-row"><input type="password" id="regPassword" class="auth-input" placeholder="Hasło (min.6) *"><input type="password" id="regConfirm" class="auth-input" placeholder="Potwierdź hasło *"></div><div class="auth-checkbox"><input type="checkbox" id="policyCheck"> <label>Akceptuję Regulamin *</label></div><button id="doRegisterAdmin" class="auth-btn">Zarejestruj jako administrator</button><button id="backToWelcome" class="auth-back">← Powrót</button><div id="registerError" class="error-msg"></div></div></div>`;
+            document.getElementById('doRegisterAdmin')?.addEventListener('click', () => {
+                const name = document.getElementById('regName').value.trim();
+                const surname = document.getElementById('regSurname').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const pwd = document.getElementById('regPassword').value;
+                const confirm = document.getElementById('regConfirm').value;
+                const policy = document.getElementById('policyCheck').checked;
+                if (!name || !surname || !email || !pwd || !confirm) { document.getElementById('registerError').innerText = "❌ Wypełnij wszystkie wymagane pola"; return; }
+                if (!isValidEmail(email)) { document.getElementById('registerError').innerText = "❌ Niepoprawny email (nazwa@domena.pl)"; return; }
+                if (pwd !== confirm) { document.getElementById('registerError').innerText = "❌ Hasła różnią się"; return; }
+                if (pwd.length < 6) { document.getElementById('registerError').innerText = "❌ Hasło min.6 znaków"; return; }
+                if (!policy) { document.getElementById('registerError').innerText = "❌ Zaakceptuj regulamin"; return; }
+                if (users.find(u => u.email === email)) { document.getElementById('registerError').innerText = "❌ Email już istnieje"; return; }
+                const newAdmin = { id: Date.now(), email, password: pwd, name, surname, phone: "", address: "", role: "admin" };
+                users.push(newAdmin);
+                saveData();
+                addLog('REJESTRACJA ADMINA', `Nowy administrator: ${email}`);
+                alert("✅ Rejestracja udana! Możesz się teraz zalogować jako admin.");
+                authView = 'adminLogin';
+                render();
+            });
+            document.getElementById('backToWelcome')?.addEventListener('click', () => { authView = 'welcome'; render(); });
+        }
+    }
+
+    function renderShop(root, user) {
+        root.innerHTML = `<div class="navbar"><div class="logo-area" id="homeBtn"><div class="logo-icon"><div class="ball ball1"></div><div class="ball ball2"></div><div class="ball ball3"></div><div class="ball ball4"></div><div class="ball ball5"></div><div class="center-dot"></div></div><span class="logo-text">CompRent</span></div><div class="nav-links"><button class="nav-link" id="profileNav">Profil</button><div class="user-badge"><span>👋 ${user.name} ${user.surname}</span><button id="logoutBtn" class="logout-btn">Wyloguj</button></div></div></div><div class="container"><div class="search-wrapper"><input type="text" id="globalSearch" class="search-input" placeholder="🔍 Szukaj laptopa..." value="${filters.search}"></div><div class="shop-layout"><div class="filter-panel"><div class="filter-header"><h3>Filtry</h3><button id="clearAllFilters" class="clear-filters">Wyczyść</button></div><div class="filter-section"><label>Marka</label><select id="brandSelect" class="filter-select"><option value="">Wszystkie</option><option>Acer</option><option>Apple</option><option>Lenovo</option><option>Asus</option><option>Dell</option><option>HP</option></select></div><div class="filter-section"><label>RAM</label><div class="checkbox-group"><label><input type="checkbox" value="8GB" class="ramFilter"> 8GB</label><label><input type="checkbox" value="16GB" class="ramFilter"> 16GB</label><label><input type="checkbox" value="32GB" class="ramFilter"> 32GB</label></div></div><div class="filter-section"><label>Cena</label><div class="price-range"><input type="number" id="minPrice" placeholder="Od" value="${filters.minPrice}"><input type="number" id="maxPrice" placeholder="Do" value="${filters.maxPrice}"></div></div></div><div class="products-grid" id="productsGrid"></div></div></div>`;
+        attachShopEvents(user); 
+        renderClientProducts();
+    }
+
+    function attachShopEvents(user) {
+        document.getElementById('homeBtn')?.addEventListener('click', () => { currentView = 'shop'; render(); });
+        document.getElementById('profileNav')?.addEventListener('click', () => { currentView = 'profile'; render(); });
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; isAdminMode = false; authView = 'welcome'; saveData(); render(); });
+        document.getElementById('clearAllFilters')?.addEventListener('click', () => { filters = { brand: '', ram: [], minPrice: '', maxPrice: '', search: '' }; render(); });
+        document.getElementById('globalSearch')?.addEventListener('input', (e) => { filters.search = e.target.value; renderClientProducts(); });
+        document.getElementById('brandSelect')?.addEventListener('change', (e) => { filters.brand = e.target.value; renderClientProducts(); });
+        document.getElementById('minPrice')?.addEventListener('input', (e) => { filters.minPrice = e.target.value; renderClientProducts(); });
+        document.getElementById('maxPrice')?.addEventListener('input', (e) => { filters.maxPrice = e.target.value; renderClientProducts(); });
+        document.querySelectorAll('.ramFilter').forEach(cb => cb.addEventListener('change', () => { filters.ram = Array.from(document.querySelectorAll('.ramFilter:checked')).map(c => c.value); renderClientProducts(); }));
+    }
+
+    function renderClientProducts() {
+        const grid = document.getElementById('productsGrid'); 
+        if (!grid) return;
+        
+        let filtered = [...products];
+        if (filters.search) filtered = filtered.filter(p => p.name.toLowerCase().includes(filters.search.toLowerCase()) || p.brand.toLowerCase().includes(filters.search.toLowerCase()));
+        if (filters.brand) filtered = filtered.filter(p => p.brand === filters.brand);
+        if (filters.ram.length) filtered = filtered.filter(p => filters.ram.includes(p.ram));
+        if (filters.minPrice) filtered = filtered.filter(p => p.price >= parseFloat(filters.minPrice));
+        if (filters.maxPrice) filtered = filtered.filter(p => p.price <= parseFloat(filters.maxPrice));
+        
+        if (!filtered.length) { grid.innerHTML = '<div class="no-results">😢 Brak laptopów</div>'; return; }
+        grid.innerHTML = filtered.map(p => `<div class="product-card" data-id="${p.id}"><img class="product-img" src="${p.image}" onerror="this.src='https://picsum.photos/id/1/300/180'"><div class="product-info"><div class="product-name">${escapeHtml(p.name)}</div><div class="product-specs">${escapeHtml(p.subtitle)}</div><div class="product-price">${p.price} zł / miesiąc</div></div></div>`).join('');
+        document.querySelectorAll('.product-card').forEach(card => { card.addEventListener('click', () => { selectedProduct = products.find(l => l.id == card.dataset.id); currentView = 'product'; render(); }); });
+    }
+
+    function renderProductDetail(root, user, product) {
+        root.innerHTML = `<div class="navbar"><div class="logo-area" id="homeBtn"><div class="logo-icon"><div class="ball ball1"></div><div class="ball ball2"></div><div class="ball ball3"></div><div class="ball ball4"></div><div class="ball ball5"></div><div class="center-dot"></div></div><span class="logo-text">CompRent</span></div><div class="nav-links"><button class="nav-link" id="profileNav">Profil</button><div class="user-badge"><span>👋 ${user.name} ${user.surname}</span><button id="logoutBtn" class="logout-btn">Wyloguj</button></div></div></div><div class="container"><div class="breadcrumb"><span id="shopBread">Strona główna</span> > ${product.name}</div><div class="product-detail-card"><div class="product-detail-header"><div><div class="product-detail-title">${product.name}</div></div><div><div class="detail-price">${product.price} zł / miesiąc</div><button id="rentProductBtn" class="rent-button">Wypożycz</button></div></div><img src="${product.image}" style="width:100%; max-height:300px; object-fit:cover; border-radius:24px; margin-bottom:20px;" onerror="this.src='https://picsum.photos/id/1/300/180'"><div class="specs-table">${Object.entries(product.specs).map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}</div><div>${product.description}</div></div></div>`;
+        document.getElementById('homeBtn')?.addEventListener('click', () => { currentView = 'shop'; render(); });
+        document.getElementById('shopBread')?.addEventListener('click', () => { currentView = 'shop'; render(); });
+        document.getElementById('profileNav')?.addEventListener('click', () => { currentView = 'profile'; render(); });
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; isAdminMode = false; authView = 'welcome'; saveData(); render(); });
+        document.getElementById('rentProductBtn')?.addEventListener('click', () => { 
+            saveOrder({ id: Date.now(), userId: user.id, productId: product.id, productName: product.name, price: product.price, rentalDate: new Date().toISOString().slice(0, 10), status: 'active', returnDate: null }); 
+            alert(`Wypożyczono: ${product.name}`); 
+            currentView = 'shop';
+            render();
+        });
+    }
+
+    function renderProfile(root, user) {
+        const userOrders = getOrders(user.id);
+        root.innerHTML = `<div class="navbar"><div class="logo-area" id="homeBtn"><div class="logo-icon"><div class="ball ball1"></div><div class="ball ball2"></div><div class="ball ball3"></div><div class="ball ball4"></div><div class="ball ball5"></div><div class="center-dot"></div></div><span class="logo-text">CompRent</span></div><div class="nav-links"><button class="nav-link" id="profileNav">Profil</button><div class="user-badge"><span>👋 ${user.name} ${user.surname}</span><button id="logoutBtn" class="logout-btn">Wyloguj</button></div></div></div><div class="container"><div class="profile-card"><div class="product-detail-title">Moje konto</div><div class="profile-tabs"><button class="profile-tab active" data-tab="account">Dane</button><button class="profile-tab" data-tab="orders">Zamówienia</button></div><div id="accountTab"><div class="form-double"><div class="input-field"><label>Imię</label><input id="profileName" value="${user.name}"></div><div class="input-field"><label>Nazwisko</label><input id="profileSurname" value="${user.surname}"></div><div class="input-field"><label>Email</label><input id="profileEmail" value="${user.email}"></div></div><button id="saveProfile" class="save-button">Zapisz</button></div><div id="ordersTab" style="display:none;"><div id="ordersList" class="orders-list"></div></div></div></div>`;
+        const container = document.getElementById('ordersList');
+        if (container) {
+            if (!userOrders.length) container.innerHTML = '<div class="empty-orders" style="text-align:center; padding:40px;">Brak zamówień</div>';
+            else container.innerHTML = userOrders.map(o => `<div class="order-item"><div><div><strong>${o.productName}</strong></div><div>${o.rentalDate} | ${o.price} zł</div><div class="order-status ${o.status === 'active' ? 'status-active' : 'status-returned'}">${o.status === 'active' ? 'Aktywne' : 'Zwrócone'}</div></div>${o.status === 'active' ? `<button class="return-btn" data-id="${o.id}">Zwróć</button>` : '<div>✔️ Zakończone</div>'}</div>`).join('');
+            document.querySelectorAll('.return-btn').forEach(btn => btn.addEventListener('click', () => { if (returnOrder(parseInt(btn.dataset.id))) { alert('Zwrócono laptop'); render(); } }));
+        }
+        document.getElementById('homeBtn')?.addEventListener('click', () => { currentView = 'shop'; render(); });
+        document.getElementById('profileNav')?.addEventListener('click', () => { currentView = 'profile'; render(); });
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; isAdminMode = false; authView = 'welcome'; saveData(); render(); });
+        document.getElementById('saveProfile')?.addEventListener('click', () => { const idx = users.findIndex(u => u.id === user.id); if (idx !== -1) { users[idx].name = document.getElementById('profileName').value; users[idx].surname = document.getElementById('profileSurname').value; users[idx].email = document.getElementById('profileEmail').value; saveData(); currentUser = users[idx]; alert('Zapisano'); render(); } });
+        document.querySelectorAll('.profile-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); document.getElementById('accountTab').style.display = tab.dataset.tab === 'account' ? 'block' : 'none'; document.getElementById('ordersTab').style.display = tab.dataset.tab === 'orders' ? 'block' : 'none'; }); });
+    }
+
+    function renderAdminPanel(root) {
+        root.innerHTML = `
+            <div class="navbar">
+                <div class="logo-area" id="backToClient"><div class="logo-icon"><div class="ball ball1"></div><div class="ball ball2"></div><div class="ball ball3"></div><div class="ball ball4"></div><div class="ball ball5"></div><div class="center-dot"></div></div><span class="logo-text">CompRent ADMIN</span></div>
+                <div class="user-badge"><span>👑 ${currentUser.name} ${currentUser.surname}</span><button id="logoutBtn" class="logout-btn">Wyloguj</button></div>
+            </div>
+            <div class="container">
+                <div class="tabs">
+                    <button class="tab ${currentTab === 'shop' ? 'active' : ''}" data-tab="shop">📦 Sklep</button>
+                    <button class="tab ${currentTab === 'add' ? 'active' : ''}" data-tab="add">➕ Dodaj produkt</button>
+                    <button class="tab ${currentTab === 'orders' ? 'active' : ''}" data-tab="orders">📋 Zamówienia</button>
+                    <button class="tab ${currentTab === 'logs' ? 'active' : ''}" data-tab="logs">📜 Logi zmian</button>
+                    <button class="tab ${currentTab === 'stats' ? 'active' : ''}" data-tab="stats">📊 Statystyki</button>
+                </div>
+                ${currentTab === 'add' ? `
+                    <div class="add-product-card"><h3>➕ Dodaj nowy laptop</h3>
+                        <div class="form-row"><div class="form-group"><label>Nazwa</label><input id="prodName" placeholder="Nazwa laptopa"></div><div class="form-group"><label>Specyfikacja</label><input id="prodSub" placeholder="15″ OLED · i7 · 32GB"></div><div class="form-group"><label>Cena (zł/mc)</label><input id="prodPrice" type="number" placeholder="399"></div></div>
+                        <div class="form-row"><div class="form-group"><label>Marka</label><input id="prodBrand" placeholder="Dell"></div><div class="form-group"><label>RAM</label><input id="prodRam" placeholder="32GB"></div><div class="form-group"><label>Dysk</label><input id="prodStorage" placeholder="1TB"></div></div>
+                        <div class="form-row"><div class="form-group"><label>GPU</label><input id="prodGpu" placeholder="RTX 4060"></div><div class="form-group"><label>Ekran</label><input id="prodScreen" placeholder="15.6″"></div><div class="form-group"><label>URL obrazka</label><input id="prodImage" placeholder="https://picsum.photos/id/100/300/180"></div></div>
+                        <button id="addProductBtn" class="btn-add">➕ Dodaj produkt</button>
+                    </div>
+                ` : ''}
+                ${currentTab === 'shop' ? `<div class="search-wrapper"><input type="text" id="searchInput" class="search-input" placeholder="🔍 Szukaj laptopa..."></div><div class="shop-layout"><div class="filter-panel"><div class="filter-header"><h3>Filtry</h3><button id="clearFilters" style="background:none; color:#1f6392; cursor:pointer;">Wyczyść</button></div><div class="filter-section"><label>Marka</label><select id="brandFilter" class="filter-select"><option value="">Wszystkie</option><option>Acer</option><option>Apple</option><option>Lenovo</option><option>Dell</option><option>HP</option></select></div><div class="filter-section"><label>RAM</label><div class="checkbox-group"><label><input type="checkbox" value="8GB" class="ramFilterAdmin"> 8GB</label><label><input type="checkbox" value="16GB" class="ramFilterAdmin"> 16GB</label><label><input type="checkbox" value="32GB" class="ramFilterAdmin"> 32GB</label></div></div><div class="filter-section"><label>Cena</label><div class="price-range"><input type="number" id="minPriceAdmin" placeholder="Od"><input type="number" id="maxPriceAdmin" placeholder="Do"></div></div></div><div class="products-grid" id="adminProductsGrid"></div></div>` : ''}
+                ${currentTab === 'orders' ? `<div class="orders-list"><h3>📋 Wszystkie wypożyczenia</h3>${orders.length === 0 ? '<p>Brak wypożyczeń</p>' : orders.map(o => `<div class="order-item"><div><strong>${o.productName}</strong><br><small>Data: ${o.rentalDate || '?'}</small></div><div>${o.price} zł</div><div><span class="status-active">${o.status === 'active' ? 'Aktywne' : 'Zwrócone'}</span></div></div>`).join('')}</div>` : ''}
+                ${currentTab === 'logs' ? `<div class="logs-list"><h3>📜 Rejestr zmian</h3>${logs.length === 0 ? '<p>Brak logów</p>' : logs.map(l => `<div class="log-item"><span class="log-date">${l.date}</span><span style="background:#e6f7e6; padding:2px 8px; border-radius:20px; margin-left:10px;">${l.action}</span><div>${l.details}</div></div>`).join('')}</div>` : ''}
+                ${currentTab === 'stats' ? `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${products.length}</div><div>Produkty</div></div><div class="stat-card"><div class="stat-number">${users.filter(u => u.role === 'user').length}</div><div>Klienci</div></div><div class="stat-card"><div class="stat-number">${orders.filter(o => o.status === 'active').length}</div><div>Aktywne wypożyczenia</div></div><div class="stat-card"><div class="stat-number">${orders.reduce((sum, o) => sum + (o.price || 0), 0)} zł</div><div>Przychód</div></div></div><div class="products-grid">${products.slice(0, 3).map(p => `<div class="product-card"><img class="product-img" src="${p.image}"><div class="product-info"><div class="product-name">${p.name}</div><div class="product-price">${p.price} zł</div></div></div>`).join('')}</div>` : ''}
+            </div>
+        `;
+        attachAdminEvents();
+        if (currentTab === 'shop') renderAdminProducts();
+    }
+
+    function attachAdminEvents() {
+        document.querySelectorAll('.tab').forEach(btn => { btn.addEventListener('click', () => { currentTab = btn.dataset.tab; render(); }); });
+        document.getElementById('backToClient')?.addEventListener('click', () => { isAdminMode = false; currentView = 'shop'; render(); });
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; isAdminMode = false; authView = 'welcome'; saveData(); render(); });
+        document.getElementById('addProductBtn')?.addEventListener('click', () => {
+            const name = document.getElementById('prodName').value.trim();
+            const subtitle = document.getElementById('prodSub').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            if (!name || !subtitle || isNaN(price)) { alert('Wypełnij wszystkie pola'); return; }
+            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+            products.push({ id: newId, name, subtitle, price, brand: document.getElementById('prodBrand').value.trim() || "Inne", ram: document.getElementById('prodRam').value.trim() || "?", storage: document.getElementById('prodStorage').value.trim() || "?", gpu: document.getElementById('prodGpu').value.trim() || "?", screen: document.getElementById('prodScreen').value.trim() || "?", image: document.getElementById('prodImage').value.trim() || "https://picsum.photos/id/1/300/180", description: "Nowy laptop", specs: { procesor: document.getElementById('prodBrand').value.trim() || "?", ram: document.getElementById('prodRam').value.trim() || "?", dysk: document.getElementById('prodStorage').value.trim() || "?", karta: document.getElementById('prodGpu').value.trim() || "?", ekran: document.getElementById('prodScreen').value.trim() || "?", system: "Windows 11" } });
+            saveData();
+            addLog('DODANO PRODUKT', `${name} (${price} zł/mc)`);
+            currentTab = 'shop';
+            render();
+        });
+        if (currentTab === 'shop') {
+            document.getElementById('searchInput')?.addEventListener('input', () => renderAdminProducts());
+            document.getElementById('brandFilter')?.addEventListener('change', () => renderAdminProducts());
+            document.getElementById('minPriceAdmin')?.addEventListener('input', () => renderAdminProducts());
+            document.getElementById('maxPriceAdmin')?.addEventListener('input', () => renderAdminProducts());
+            document.querySelectorAll('.ramFilterAdmin').forEach(cb => cb.addEventListener('change', () => renderAdminProducts()));
+            document.getElementById('clearFilters')?.addEventListener('click', () => {
+                const searchInput = document.getElementById('searchInput');
+                const brandFilter = document.getElementById('brandFilter');
+                const minPrice = document.getElementById('minPriceAdmin');
+                const maxPrice = document.getElementById('maxPriceAdmin');
+                if (searchInput) searchInput.value = '';
+                if (brandFilter) brandFilter.value = '';
+                if (minPrice) minPrice.value = '';
+                if (maxPrice) maxPrice.value = '';
+                document.querySelectorAll('.ramFilterAdmin').forEach(cb => cb.checked = false);
+                renderAdminProducts();
+            });
+        }
+    }
+
+    function renderAdminProducts() {
+        const grid = document.getElementById('adminProductsGrid'); 
+        if (!grid) return;
+        
+        const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+        const brand = document.getElementById('brandFilter')?.value || '';
+        const minPrice = parseFloat(document.getElementById('minPriceAdmin')?.value) || 0;
+        const maxPrice = parseFloat(document.getElementById('maxPriceAdmin')?.value) || Infinity;
+        const selectedRam = Array.from(document.querySelectorAll('.ramFilterAdmin:checked')).map(cb => cb.value);
+        
+        let filtered = products.filter(p => {
+            if (search && !p.name.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search)) return false;
+            if (brand && p.brand !== brand) return false;
+            if (p.price < minPrice || p.price > maxPrice) return false;
+            if (selectedRam.length > 0 && !selectedRam.includes(p.ram)) return false;
+            return true;
+        });
+        if (!filtered.length) { grid.innerHTML = '<div class="no-results">😢 Brak laptopów</div>'; return; }
+        grid.innerHTML = filtered.map(p => `<div class="product-card"><img class="product-img" src="${p.image}" onerror="this.src='https://picsum.photos/id/1/300/180'"><div class="product-info"><div class="product-name">${escapeHtml(p.name)}</div><div class="product-specs">${escapeHtml(p.subtitle)}</div><div class="product-price">${p.price} zł / miesiąc</div><div class="admin-buttons"><button class="edit-product-btn" data-id="${p.id}">✏️ Edytuj</button><button class="delete-product-btn" data-id="${p.id}">🗑️ Usuń</button></div></div></div>`).join('');
+        document.querySelectorAll('.edit-product-btn').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); const id = parseInt(btn.dataset.id); const prod = products.find(p => p.id === id); if (prod) { const newName = prompt('Nowa nazwa:', prod.name); if (newName) { const newPrice = parseFloat(prompt('Nowa cena:', prod.price)); if (!isNaN(newPrice)) { prod.name = newName; prod.price = newPrice; saveData(); addLog('EDYTOWANO', `${newName} (${newPrice} zł)`); renderAdminProducts(); } } } }); });
+        document.querySelectorAll('.delete-product-btn').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); if (confirm('Usunąć produkt?')) { const id = parseInt(btn.dataset.id); const prod = products.find(p => p.id === id); const newProducts = products.filter(p => p.id !== id); products = newProducts; saveData(); addLog('USUNIĘTO', prod?.name || 'produkt'); renderAdminProducts(); } }); });
+    }
+
+    init();
+    render();
+</script>
+</body>
+</html>
