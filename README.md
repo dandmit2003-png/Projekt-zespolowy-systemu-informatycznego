@@ -48,7 +48,6 @@ git clone https://github.com/dandmit2003-png/Projekt-zespolowy-systemu-informaty
 Project gotowy
 3. Wejdż na strone https://app.netlify.com/drop i wklej plik "Projekt gotowy"
 
-
 ## Instrukcja użytkownika
 1. Wejdż na strone https://app.netlify.com/drop i wklej plik "Projekt gotowy"
 3. Utwórz konto
@@ -64,8 +63,8 @@ Project gotowy
 - alfa wersja.jpg
 
 ## Zrzuty ekranu
-![Klient](docs/login.png)
-![Administrator](docs/dashboard.png)
+![Klient](https://drive.google.com/file/d/17jDwPY28oGRcR33mX2EddMkVTKuWbcEF/view?usp=sharing)
+![Administrator](https://drive.google.com/file/d/10A3A2kjtZmYM6DR795X9MEoGevNdcygT/view?usp=sharing)
 
 ## Status projektu
 Projekt ukończony w ramach kursu Projekt Zespołowy Systemu Informatycznych 2026.
