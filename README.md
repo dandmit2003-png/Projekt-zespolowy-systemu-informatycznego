@@ -6,14 +6,14 @@
 - Jaki problem rozwiązuje: Aplikacja rozwiązuje problem klienta, który potrzebuje szybko i bez zbędnych formalności wypożyczyć laptop na krótki okres, umożliwiając mu samodzielne przeglądanie, filtrowanie, wypożyczenie oraz zwrot sprzętu online z poziomu własnego profilu.
 
 ## Sprint plan
-Sprint 1 | 10.03 | konfiguracja, baza danych, UI
-Sprint 2 | 24.03 | lista laptopów, filtr, logowanie
-Sprint 3 | 14.04 | wypożyczenie, profil, zamówienia
-Sprint 4 | 28.05 | panel admina, dodawanie produktów
+- Sprint 1 | 10.03 | konfiguracja, baza danych, UI
+- Sprint 2 | 24.03 | lista laptopów, filtr, logowanie
+- Sprint 3 | 14.04 | wypożyczenie, profil, zamówienia
+- Sprint 4 | 28.05 | panel admina, dodawanie produktów
 
 ## Skład zespołu
-Danylo Melikhov | frontend, logika aplikacji, Github
-Kseniia Meshcheninets | koncepcja, testy, dokumentacja
+- Danylo Melikhov | frontend, logika aplikacji, Github
+- Kseniia Meshcheninets | koncepcja, testy, dokumentacja
 
 ## Technologie
 Frontend:
