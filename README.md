@@ -2,7 +2,7 @@
 
 ## Opis projektu
 - Сo robi: Strona internetowa zaprojektowana w celu umożliwienia firmom oraz osobom prywatnym wynajmu komputerów dostosowanych do ich potrzeb, wyposażona w funkcje filtrowania ofert, zarządzania zamówieniami oraz obsługi zwrotów.
-- Dla kogo jest: Srtona jest skierowana dla wszysktich chętnych
+- Dla kogo jest: Strona jest skierowana dla wszysktich chętnych
 - Jaki problem rozwiązuje: Aplikacja rozwiązuje problem klienta, który potrzebuje szybko i bez zbędnych formalności wypożyczyć laptop na krótki okres, umożliwiając mu samodzielne przeglądanie, filtrowanie, wypożyczenie oraz zwrot sprzętu online z poziomu własnego profilu.
 
 ## Sprint plan
