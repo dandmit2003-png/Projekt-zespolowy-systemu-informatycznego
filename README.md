@@ -63,8 +63,8 @@ Project gotowy
 - alfa wersja.jpg
 
 ## Zrzuty ekranu
-![Klient](https://drive.google.com/file/d/17jDwPY28oGRcR33mX2EddMkVTKuWbcEF/view?usp=sharing)
-![Administrator](https://drive.google.com/file/d/10A3A2kjtZmYM6DR795X9MEoGevNdcygT/view?usp=sharing)
+Klient | https://drive.google.com/file/d/17jDwPY28oGRcR33mX2EddMkVTKuWbcEF/view?usp=sharing
+Administrator | https://drive.google.com/file/d/10A3A2kjtZmYM6DR795X9MEoGevNdcygT/view?usp=sharing
 
 ## Status projektu
 Projekt ukończony w ramach kursu Projekt Zespołowy Systemu Informatycznych 2026.
