@@ -25,6 +25,7 @@ Backend:
 - Visual Studio Code
 Baza danych:
 - MySQL
+- localStorage
 
 ## Funkcjonalności
 - Rejestracja / logowanie (klient + admin)
